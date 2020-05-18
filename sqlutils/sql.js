@@ -24,9 +24,10 @@ var primaryKey = new Array();
 //     __EMPTY_5: '允许空',
 //     __EMPTY_6: '备注'
 // };
-var tblName = "t_oper_info";
+var tblName = "t_sys_role_menu";
 
 var voArr = new Array();
+console.log("-----------------------------" + JSON.stringify(content[0].key));
 for (var i = 1 ; i <content.length; i++) {
     var simple = content[i];
     var vo ={

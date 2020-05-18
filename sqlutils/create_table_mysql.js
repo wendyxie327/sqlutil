@@ -10,7 +10,7 @@ var createTableMySql = {
         var sql = ' `' + name + '` ';
         if (type.toUpperCase() === 'String'.toUpperCase()
             || type.toUpperCase() === 'VARCHAR2'.toUpperCase()
-            || type.toUpperCase() === 'VARCHAR'.toUpperCase()) {
+            || type.toUpperCase() === 'VARCHAR'.toUpperCase() || type.toUpperCase() === 'CHAR'.toUpperCase()) {
             sql = sql + ' VARCHAR';
             if (len) {
                 sql = sql + '(' + len + ')'
@@ -24,6 +24,8 @@ var createTableMySql = {
         ||type.toUpperCase() === 'bigint'.toUpperCase() ) {
             sql = sql + ' bigint '
         } else if (type.toUpperCase() === 'tinyint'.toUpperCase()) {
+            sql = sql + ' tinyint(2) '
+        } else if (type.toUpperCase() === 'decimal'.toUpperCase()) {
             sql = sql + ' tinyint(2) '
         } else if (type.toUpperCase() === 'Date'.toUpperCase() || type.toUpperCase() === 'DateTime'.toUpperCase() || type.toUpperCase() === 'time'.toUpperCase()
         || type.toUpperCase() === 'TIMESTAMP'.toUpperCase()) {
@@ -98,16 +100,21 @@ var createTableMySql = {
 
         test = test + ') \n';
         test = test + ' ; \n';
-
+        var primaryKeyStr = '';
         // 设置主键
         if (primaryKey.length > 0) {
             console.log("primaryKey.length = " + primaryKey.length);
             for (var i = 0; i < primaryKey.length; i++) {
-                test = test + ' ALTER TABLE ' + tblName + ' ADD CHECK  (' + primaryKey[i] + ' IS NOT NULL); \n';
-                test = test + ' ALTER TABLE ' + tblName + ' ADD  PRIMARY KEY (' + primaryKey[i] + ' ); \n';
+                primaryKeyStr =primaryKeyStr + primaryKey[i] ;
+                if (i < primaryKey.length-1) {
+                    primaryKeyStr =  primaryKeyStr + ', ';
+                }
+
             }
+            // test = test + ' ALTER TABLE ' + tblName + ' ADD CHECK  (' + primaryKeyStr + ' IS NOT NULL); \n';
+            test = test + ' ALTER TABLE ' + tblName + ' ADD  PRIMARY KEY (' + primaryKeyStr + ' ); \n';
         }
-        return test.toUpperCase();
+        return test.toLowerCase();
     }
 } ;
 
