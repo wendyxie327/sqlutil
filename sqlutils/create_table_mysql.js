@@ -10,16 +10,20 @@ var createTableMySql = {
         var sql = ' `' + name + '` ';
         if (type.toUpperCase() === 'String'.toUpperCase()
             || type.toUpperCase() === 'VARCHAR2'.toUpperCase()
-            || type.toUpperCase() === 'VARCHAR'.toUpperCase() || type.toUpperCase() === 'CHAR'.toUpperCase()) {
+            || type.toUpperCase() === 'VARCHAR'.toUpperCase() ) {
             sql = sql + ' VARCHAR';
             if (len) {
                 sql = sql + '(' + len + ')'
             } else {
                 sql = sql + '(255)'
             }
+        } else if (type.toUpperCase() === 'CHAR'.toUpperCase()) {
+            sql = sql + type + '(' + len + ')';
         } else if (type.toUpperCase() === 'Integer'.toUpperCase() || type.toUpperCase() === 'int'.toUpperCase()
         || type.toUpperCase() === 'NUMBER'.toUpperCase()) {
             sql = sql + ' int(11) ';
+        } else if (type.toUpperCase() === 'decimal'.toUpperCase()) {
+            sql = sql + type + len;
         } else if (type.toUpperCase() === 'Long'.toUpperCase()
         ||type.toUpperCase() === 'bigint'.toUpperCase() ) {
             sql = sql + ' bigint '
@@ -43,6 +47,7 @@ var createTableMySql = {
 
         sql = sql + " COMMENT '" + chName ;
         if (remark){
+            remark = remark + "";
             remark = remark.replace(/\r\n/g, " ");
             sql = sql +"     " + remark
         }

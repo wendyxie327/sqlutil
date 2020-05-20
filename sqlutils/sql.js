@@ -24,7 +24,7 @@ var primaryKey = new Array();
 //     __EMPTY_5: '允许空',
 //     __EMPTY_6: '备注'
 // };
-var tblName = "t_sys_role_menu";
+var tblName = "t_sys_org_department_post";
 
 var voArr = new Array();
 console.log("-----------------------------" + JSON.stringify(content[0].key));
